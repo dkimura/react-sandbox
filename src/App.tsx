@@ -1,47 +1,33 @@
-import React, { useState } from 'react'
+import React from 'react'
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Route,
+  Switch,
+} from 'react-router-dom'
+import { withAuthenticationRequired } from '@auth0/auth0-react'
 
-import logo from './logo.svg'
+import { Login } from './pages/LoginPage'
 
-import './App.css'
+const AppRoute = () => (
+  <Route path="/">
+    <h1>Hello</h1>
+  </Route>
+)
 
-const App = () => {
-  const [count, setCount] = useState(0)
+const PrivateRoute = withAuthenticationRequired(AppRoute, {
+  onRedirecting: () => <Redirect to="/login" />,
+})
 
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img alt="logo" className="App-logo" src={logo} />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button onClick={() => setCount((prev) => prev + 1)} type="button">
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.tsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
-    </div>
-  )
-}
+const App = () => (
+  <Router>
+    <Switch>
+      <Route path="/login">
+        <Login />
+      </Route>
+      <PrivateRoute />
+    </Switch>
+  </Router>
+)
 
 export default App
