@@ -15,9 +15,13 @@ type Props = React.ComponentProps<typeof Route>
 
 const ProtectedRoute: React.FC<Props> = ({ component, path }) => (
   <Route
-    component={withAuthenticationRequired(component, {
-      onRedirecting: () => <Redirect to="/login" />,
-    })}
+    component={
+      component
+        ? withAuthenticationRequired(component, {
+            onRedirecting: () => <Redirect to="/login" />,
+          })
+        : undefined
+    }
     path={path}
   />
 )
