@@ -1,12 +1,24 @@
 import React from 'react'
-import { Box, Button, Flex, Stack, Text } from '@chakra-ui/react'
+import { User } from '@auth0/auth0-react'
+import {
+  Avatar,
+  Box,
+  Button,
+  Flex,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Text,
+} from '@chakra-ui/react'
 
 type Props = {
   onLogoutClick: React.ComponentProps<typeof Button>['onClick']
+  user: User | undefined
 }
 
-export const TopPage = ({ onLogoutClick }: Props) => (
-  <Box>
+export const TopPage = ({ onLogoutClick, user }: Props) => (
+  <Box minH="100vh">
     <Flex
       align="center"
       bg="white"
@@ -24,21 +36,14 @@ export const TopPage = ({ onLogoutClick }: Props) => (
         </Text>
       </Flex>
 
-      <Stack
-        direction="row"
-        flex={{ base: 1, md: 0 }}
-        justify="flex-end"
-        spacing={6}
-      >
-        <Button
-          fontSize="sm"
-          fontWeight={400}
-          onClick={onLogoutClick}
-          variant="link"
-        >
-          Logout
-        </Button>
-      </Stack>
+      <Menu>
+        <MenuButton as={Button} cursor="pointer" rounded="full" variant="link">
+          <Avatar size="sm" src={user?.picture} />
+        </MenuButton>
+        <MenuList>
+          <MenuItem onClick={onLogoutClick}>ログアウト</MenuItem>
+        </MenuList>
+      </Menu>
     </Flex>
   </Box>
 )
