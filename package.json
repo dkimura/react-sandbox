@@ -1,10 +1,10 @@
 {
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite",
     "build": "tsc && vite build",
-    "serve": "vite preview",
-    "codegen": "graphql-codegen --config codegen.yml -r dotenv/config"
+    "codegen": "graphql-codegen --config codegen.yml -r dotenv/config",
+    "dev": "vite",
+    "serve": "vite preview"
   },
   "dependencies": {
     "@auth0/auth0-react": "1.5.0",
@@ -38,5 +38,15 @@
     "prettier": "2.3.1",
     "typescript": "^4.3.2",
     "vite": "^2.3.7"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "tsc",
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "package.json": [
+      "npx prettier-package-json --write"
+    ]
   }
 }
